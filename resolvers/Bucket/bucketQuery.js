@@ -4,11 +4,9 @@ const Bucket = require('../../models/bucketModel');
 module.exports = {
   Query: {
     async getBuckets(_, { userId }) {
-      console.log('getting shit');
       const targetUser = mongoose.Types.ObjectId(userId);
       try {
         const allBuckets = await Bucket.find({ author: targetUser });
-        // console.log(allBuckets);
         return allBuckets;
       } catch (error) {
         console.log(error);

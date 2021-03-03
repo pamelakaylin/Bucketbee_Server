@@ -34,6 +34,32 @@ const typeDefs = gql`
   }
   type User {
     id: ID!
+    firstName: String
+    lastName: String
+    username: String
+    email: String
+    password: String
+    birthday: String
+    friends: [User]
+    createdAt: String
+    updatedAt: String
+  }
+  type Chat {
+    name: String
+    admin: User
+    members: [User]
+    messages: [Message]
+    createdAt: String
+    updatedAt: String
+  }
+  type Message {
+    description: String
+    author: User
+    content: String
+    timeslots: [String]
+    photo: String
+    createdAt: String
+    updatedAt: String
   }
   input BucketInput {
     title: String
@@ -56,9 +82,33 @@ const typeDefs = gql`
     review: String
     notes: String
   }
+  input UserInput {
+    firstName: String
+    lastName: String
+    username: String
+    email: String
+    password: String
+    birthday: String
+  }
+  input ChatInput {
+    name: String
+    admin: ID
+    members: [ID]
+  }
+  input MessageInput {
+    description: String!
+    author: ID!
+    content: String
+    timeslots: [String]
+    photo: String
+  }
   type Query {
     getBuckets(userId: ID!): [Bucket]
     getBucketById(bucketId: ID!): Bucket
+    getChats(userId: ID!): [Chat]
+    getChatById(chatId: ID!): Chat
+    getUserById(userId: ID!): User
+    getUserByEmail(email: String): User
   }
   type Mutation {
     createBucket(input: BucketInput!, place: PlaceInput): Bucket
@@ -82,6 +132,10 @@ const typeDefs = gql`
     deleteBucket(bucketId: ID!): Bucket
     deleteCategory(bucketId: ID!, catId: ID!): Bucket
     deletePlace(bucketId: ID!, catId: ID!, placeId: ID!): Bucket
+    createUser(input: UserInput!): User
+    addFriendToUser(userId: ID!, friendId: ID!): [User]
+    createChat(input: ChatInput): Chat
+    postMessageToChat(chatId: ID!, input: MessageInput): Message
   }
 `;
 

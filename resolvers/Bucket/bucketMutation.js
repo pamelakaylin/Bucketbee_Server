@@ -67,7 +67,6 @@ module.exports = {
       const newPlace = updatedBucket.categories
         .find((cat) => cat.id === catId)
         .places.find((p) => p.id === String(placeID));
-      console.log('new place', newPlace);
       return newPlace;
     },
 
@@ -223,7 +222,6 @@ module.exports = {
             new: true,
           },
         );
-        console.log('Place removed!');
         return updatedBucket;
       } catch (e) {
         console.log(e);
