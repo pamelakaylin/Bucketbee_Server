@@ -12,6 +12,7 @@
   "dependencies": {
     "apollo-link-error": "^1.1.13",
     "apollo-server": "^2.21.0",
+    "bcrypt": "^5.0.1",
     "graphql": "^15.5.0",
     "mongoose": "^5.11.18"
   },

@@ -132,7 +132,8 @@ const typeDefs = gql`
     deleteBucket(bucketId: ID!): Bucket
     deleteCategory(bucketId: ID!, catId: ID!): Bucket
     deletePlace(bucketId: ID!, catId: ID!, placeId: ID!): Bucket
-    createUser(input: UserInput!): User
+    registerUser(input: UserInput!): User
+    loginUser(input: UserInput!): User
     addFriendToUser(userId: ID!, friendId: ID!): [User]
     createChat(input: ChatInput): Chat
     postMessageToChat(chatId: ID!, input: MessageInput): Message
