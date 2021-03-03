@@ -6,7 +6,10 @@ module.exports = {
     async getChats(_, { userId }) {
       try {
         const targetUser = mongoose.Types.ObjectId(userId);
-        const allChats = await Chat.find({ members: targetUser });
+        const allChats = await Chat.find({ members: targetUser }).populate(
+          'members',
+        );
+        console.log(allChats);
         return allChats;
       } catch (e) {
         console.log(e);
@@ -15,20 +18,16 @@ module.exports = {
     async getChatById(_, { chatId }) {
       try {
         const targetChat = mongoose.Types.ObjectId(chatId);
-        const chat = await Chat.findById(targetChat);
+        const chat = await Chat.findById(targetChat).populate('members');
         return chat;
       } catch (e) {
         console.log(e);
       }
     },
   },
-  Chat: {
-    async members(chat) {
-      const members = await Chat.find({ id: chat.id }).populate('members');
-      return members;
-    },
-    messages(chat) {
-      return chat.messages;
-    },
-  },
+  // Chat: {
+  //   messages(chat) {
+  //     return chat.messages;
+  //   },
+  // },
 };

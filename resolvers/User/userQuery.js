@@ -14,18 +14,11 @@ module.exports = {
     async getUserById(_, { userId }) {
       try {
         const targetUser = mongoose.Types.ObjectId(userId);
-        const user = User.findById(targetUser);
+        const user = await User.findById(targetUser).populate('friends');
         return user;
       } catch (e) {
         console.log(e);
       }
-    },
-    User: {
-      async friends(user) {
-        const targetUser = mongoose.Types.ObjectId(user.id);
-        const friends = await User.findById(targetUser).populate('friends');
-        return friends;
-      },
     },
   },
 };

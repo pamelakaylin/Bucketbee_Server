@@ -45,16 +45,18 @@ const typeDefs = gql`
     updatedAt: String
   }
   type Chat {
+    id: ID!
     name: String
-    admin: User
+    admin: ID
     members: [User]
     messages: [Message]
     createdAt: String
     updatedAt: String
   }
   type Message {
+    id: ID!
     description: String
-    author: User
+    author: ID!
     content: String
     timeslots: [String]
     photo: String
@@ -136,7 +138,7 @@ const typeDefs = gql`
     loginUser(input: UserInput!): User
     addFriendToUser(userId: ID!, friendId: ID!): [User]
     createChat(input: ChatInput): Chat
-    postMessageToChat(chatId: ID!, input: MessageInput): Message
+    postMessageToChat(chatId: ID!, input: MessageInput): Chat
   }
 `;
 
