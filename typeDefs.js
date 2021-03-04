@@ -137,6 +137,7 @@ const typeDefs = gql`
     registerUser(input: UserInput!): User
     loginUser(input: UserInput!): User
     addFriendToUser(userId: ID!, friendId: ID!): [User]
+    removeFriendFromUser(userId: ID!, friendId: ID!): [User]
     createChat(input: ChatInput): Chat
     postMessageToChat(chatId: ID!, input: MessageInput): Chat
   }

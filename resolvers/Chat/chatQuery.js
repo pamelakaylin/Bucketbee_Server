@@ -9,7 +9,6 @@ module.exports = {
         const allChats = await Chat.find({ members: targetUser }).populate(
           'members',
         );
-        console.log(allChats);
         return allChats;
       } catch (e) {
         console.log(e);

@@ -60,7 +60,9 @@ module.exports = {
         const friend = mongoose.Types.ObjectId(friendId);
         const existingFriends = await User.findById(userId).populate('friends');
         if (existingFriends.friends.length) {
-          throw new Error('Friend already exists');
+          existingFriends.friends.forEach((f) => {
+            if (f.id === friendId) throw new Error('Friend already exists');
+          });
         }
         const updatedUser = await User.findByIdAndUpdate(
           targetUser,
@@ -72,7 +74,26 @@ module.exports = {
           { $push: { friends: targetUser } },
           { new: true },
         ).populate('friends');
-        console.log(updatedUser, updatedFriend);
+        return [updatedUser, updatedFriend];
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    async removeFriendFromUser(_, { userId, friendId }) {
+      try {
+        const targetUser = mongoose.Types.ObjectId(userId);
+        const friend = mongoose.Types.ObjectId(friendId);
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: targetUser },
+          { $pullAll: { friends: [friend] } },
+          { new: true },
+        ).populate('friends');
+        const updatedFriend = await User.findOneAndUpdate(
+          { _id: friend },
+          { $pullAll: { friends: [targetUser] } },
+          { new: true },
+        ).populate('friends');
         return [updatedUser, updatedFriend];
       } catch (e) {
         console.log(e);

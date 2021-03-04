@@ -10,6 +10,7 @@ module.exports = {
         const chatObj = { name, admin };
         chatObj.members = newMembers;
         const newChat = await Chat.create(chatObj);
+        console.log(newChat);
         return newChat;
       } catch (e) {
         console.log(e);
@@ -19,7 +20,6 @@ module.exports = {
       try {
         const { description, author, content, timeslots, photo } = input;
         const authorId = mongoose.Types.ObjectId(author);
-        console.log(authorId);
         const msgObj = {
           description,
           author: authorId,
@@ -37,7 +37,6 @@ module.exports = {
             new: true,
           },
         );
-        console.log(newChat);
         return newChat;
       } catch (e) {
         console.log(e);
