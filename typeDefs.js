@@ -45,7 +45,7 @@ const typeDefs = gql`
     updatedAt: String
   }
   type Chat {
-    id: ID!
+    id: ID
     name: String
     admin: ID
     members: [User]
@@ -54,9 +54,9 @@ const typeDefs = gql`
     updatedAt: String
   }
   type Message {
-    id: ID!
+    id: ID
     description: String
-    author: ID!
+    author: ID
     content: String
     timeslots: [String]
     photo: String

@@ -16,7 +16,7 @@ const messageSchema = new Schema(
 const chatSchema = new Schema(
   {
     name: String,
-    admin: { type: Schema.Types.ObjectId, ref: 'User' },
+    admin: { type: Schema.Types.ObjectId, ref: 'User', default: null },
     members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     messages: { type: [messageSchema], default: [] },
   },

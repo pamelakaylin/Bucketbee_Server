@@ -11,7 +11,11 @@ module.exports = {
         chatObj.members = newMembers;
         const newChat = await Chat.create(chatObj);
         console.log(newChat);
-        return newChat;
+        const fullChat = await Chat.findById({ _id: newChat.id }).populate(
+          'members',
+        );
+        console.log('this is full chat', fullChat);
+        return fullChat;
       } catch (e) {
         console.log(e);
       }
