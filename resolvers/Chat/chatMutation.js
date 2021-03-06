@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { withFilter } = require('apollo-server');
 const Chat = require('../../models/chatModel');
 
 module.exports = {
@@ -10,17 +11,15 @@ module.exports = {
         const chatObj = { name, admin };
         chatObj.members = newMembers;
         const newChat = await Chat.create(chatObj);
-        console.log(newChat);
         const fullChat = await Chat.findById({ _id: newChat.id }).populate(
           'members',
         );
-        console.log('this is full chat', fullChat);
         return fullChat;
       } catch (e) {
         console.log(e);
       }
     },
-    async postMessageToChat(_, { chatId, input }) {
+    async postMessageToChat(_, { chatId, input }, context) {
       try {
         const { description, author, content, timeslots, photo } = input;
         const authorId = mongoose.Types.ObjectId(author);
@@ -32,6 +31,7 @@ module.exports = {
           photo,
         };
         const targetChat = mongoose.Types.ObjectId(chatId);
+        console.log(msgObj, 'this is msgObj');
         const newChat = await Chat.findByIdAndUpdate(
           targetChat,
           {
@@ -40,11 +40,32 @@ module.exports = {
           {
             new: true,
           },
-        );
+        ).populate('members');
+        const lastMessage = newChat.messages[newChat.messages.length - 1];
+        lastMessage.chatId = chatId;
+        await context.pubsub.publish('MESSAGE_SENT', {
+          messageSent: lastMessage,
+        });
         return newChat;
       } catch (e) {
         console.log(e);
       }
+    },
+  },
+  Subscription: {
+    messageSent: {
+      subscribe: withFilter(
+        (_, __, { pubsub }) => pubsub.asyncIterator('MESSAGE_SENT'),
+        (payload, variables) => {
+          if (!variables.chatId) {
+            return payload.messageSent.author.toString() !== variables.author;
+          }
+          return (
+            payload.messageSent.chatId.toString() === variables.chatId &&
+            payload.messageSent.author.toString() !== variables.author
+          );
+        },
+      ),
     },
   },
 };

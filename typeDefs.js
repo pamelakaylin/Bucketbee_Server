@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+  scalar Date
+
   type Bucket {
     id: ID!
     author: User
@@ -41,8 +43,8 @@ const typeDefs = gql`
     password: String
     birthday: String
     friends: [User]
-    createdAt: String
-    updatedAt: String
+    createdAt: Date
+    updatedAt: Date
   }
   type Chat {
     id: ID
@@ -50,18 +52,19 @@ const typeDefs = gql`
     admin: ID
     members: [User]
     messages: [Message]
-    createdAt: String
-    updatedAt: String
+    createdAt: Date
+    updatedAt: Date
   }
   type Message {
     id: ID
+    chatId: ID
     description: String
     author: ID
     content: String
     timeslots: [String]
     photo: String
-    createdAt: String
-    updatedAt: String
+    createdAt: Date
+    updatedAt: Date
   }
   input BucketInput {
     title: String
@@ -140,6 +143,9 @@ const typeDefs = gql`
     removeFriendFromUser(userId: ID!, friendId: ID!): [User]
     createChat(input: ChatInput): Chat
     postMessageToChat(chatId: ID!, input: MessageInput): Chat
+  }
+  type Subscription {
+    messageSent(author: ID!, chatId: ID): Message
   }
 `;
 
