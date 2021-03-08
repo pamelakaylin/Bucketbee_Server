@@ -31,7 +31,6 @@ module.exports = {
           photo,
         };
         const targetChat = mongoose.Types.ObjectId(chatId);
-        console.log(msgObj, 'this is msgObj');
         const newChat = await Chat.findByIdAndUpdate(
           targetChat,
           {

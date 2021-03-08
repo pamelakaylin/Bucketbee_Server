@@ -35,7 +35,7 @@ const typeDefs = gql`
     notes: String
   }
   type User {
-    id: ID!
+    id: ID
     firstName: String
     lastName: String
     username: String
@@ -116,7 +116,7 @@ const typeDefs = gql`
     getUserByEmail(email: String): User
   }
   type Mutation {
-    createBucket(input: BucketInput!, place: PlaceInput): Bucket
+    createBucket(input: BucketInput!, place: PlaceInput, userId: ID!): Bucket
     addCategory(bucketId: ID!, label: String): Category
     addPlace(catId: ID!, input: PlaceInput!): Place
     changeBucketName(bucketId: ID!, title: String): Bucket

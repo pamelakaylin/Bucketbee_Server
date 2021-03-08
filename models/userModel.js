@@ -10,10 +10,7 @@ const userSchema = new Schema(
     email: String,
     password: String,
     birthday: String,
-    friends: {
-      type: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-      default: [],
-    },
+    friends: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
   },
   { timestamps: true },
 );

@@ -3,11 +3,10 @@
 const mongoose = require('mongoose');
 const Bucket = require('../../models/bucketModel');
 
-const user = mongoose.Types.ObjectId('60381804843e75adbe8dcba3');
-
 module.exports = {
   Mutation: {
-    async createBucket(_, { input, place }) {
+    async createBucket(_, { input, place, userId }) {
+      const user = mongoose.Types.ObjectId(userId);
       const { title, notes, category } = input;
       const author = user;
       const date_created = new Date().toISOString();
@@ -34,7 +33,6 @@ module.exports = {
     },
 
     async addCategory(_, { bucketId, label }) {
-      console.log('whatsup');
       const targetBucket = mongoose.Types.ObjectId(bucketId);
       const catID = new mongoose.Types.ObjectId();
       const newCategory = { _id: catID, label, places: [] };

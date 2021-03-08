@@ -5,7 +5,7 @@ module.exports = {
   Query: {
     async getUserByEmail(_, { email }) {
       try {
-        const user = await User.find({ email });
+        const user = await User.find({ email }).populate('friends');
         return user;
       } catch (e) {
         console.log(e);

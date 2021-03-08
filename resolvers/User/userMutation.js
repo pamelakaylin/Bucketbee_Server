@@ -18,6 +18,8 @@ module.exports = {
         } = input;
         const existingUser = await User.find({ email });
         if (existingUser.length) throw new Error('Email already exists');
+        const existingUsername = await User.find({ username });
+        if (existingUsername.length) throw new Error('Username taken');
         const hash = await bcrypt.hash(password, saltRounds);
         const userObj = {
           firstName,
@@ -27,8 +29,7 @@ module.exports = {
           password: hash,
           birthday,
         };
-        const newUser = await User.create(userObj);
-        console.log(newUser);
+        const newUser = await User.create(userObj).populate('friends');
         return newUser;
       } catch (e) {
         console.log(e);
@@ -37,11 +38,12 @@ module.exports = {
     async loginUser(_, { input }) {
       try {
         const { email, password } = input;
-        const existingUser = await User.find({ email });
+        const existingUser = await User.find({ email }).populate('friends');
         if (existingUser !== []) {
           const hash = existingUser[0].password;
           const result = await bcrypt.compare(password, hash);
           if (result) {
+            console.log(existingUser[0]);
             return existingUser[0];
             // eslint-disable-next-line no-else-return
           } else {
