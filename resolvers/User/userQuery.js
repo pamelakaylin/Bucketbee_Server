@@ -3,10 +3,12 @@ const User = require('../../models/userModel');
 
 module.exports = {
   Query: {
-    async getUserByEmail(_, { email }) {
+    async getUserByUsername(_, { username }) {
       try {
-        const user = await User.find({ email }).populate('friends');
-        return user;
+        console.log('this is username', username);
+        const user = await User.find({ username });
+        console.log(user);
+        return user[0];
       } catch (e) {
         console.log(e);
       }

@@ -8,18 +8,29 @@ module.exports = {
       try {
         const { name, admin, members } = input;
         const newMembers = members.map((m) => mongoose.Types.ObjectId(m));
+        if (newMembers.length === 2) {
+          const existingChat = await Chat.find({
+            members: { $all: [...newMembers] },
+          }).populate('members');
+          if (existingChat.length) {
+            return existingChat[0];
+          }
+        }
         const chatObj = { name, admin };
         chatObj.members = newMembers;
         const newChat = await Chat.create(chatObj);
         const fullChat = await Chat.findById({ _id: newChat.id }).populate(
           'members',
         );
+        console.log(fullChat);
         return fullChat;
       } catch (e) {
         console.log(e);
       }
     },
     async postMessageToChat(_, { chatId, input }, context) {
+      console.log(chatId, input);
+      console.log('PMTC');
       try {
         const { description, author, content, timeslots, photo } = input;
         const authorId = mongoose.Types.ObjectId(author);

@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable quote-props */
 /* eslint-disable prettier/prettier */
 const mongoose = require('mongoose');
@@ -30,6 +31,30 @@ module.exports = {
 
       const newBucket = await Bucket.create(bucketObj);
       return newBucket;
+    },
+
+    async addUserToBucket(_, { bucketId, userId }) {
+      try {
+        console.log('THIS IS ADD USER TO BUCKET ');
+        console.log(bucketId, userId);
+        const targetBucket = mongoose.Types.ObjectId(bucketId);
+        const user = mongoose.Types.ObjectId(userId);
+        const selectedBucket = await Bucket.findById(targetBucket);
+        const existingUser = selectedBucket.members.filter(
+          (m) => JSON.stringify(m) === JSON.stringify(userId),
+        );
+        if (existingUser.length) return;
+        const updatedBucket = await Bucket.findByIdAndUpdate(
+          targetBucket,
+          {
+            $push: { members: user },
+          },
+          { new: true },
+        ).populate('members');
+        return updatedBucket;
+      } catch (e) {
+        console.log(e);
+      }
     },
 
     async addCategory(_, { bucketId, label }) {

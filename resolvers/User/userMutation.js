@@ -17,6 +17,7 @@ module.exports = {
           birthday,
         } = input;
         const existingUser = await User.find({ email });
+        console.log(existingUser);
         if (existingUser.length) throw new Error('Email already exists');
         const existingUsername = await User.find({ username });
         if (existingUsername.length) throw new Error('Username taken');
@@ -29,7 +30,7 @@ module.exports = {
           password: hash,
           birthday,
         };
-        const newUser = await User.create(userObj).populate('friends');
+        const newUser = await User.create(userObj);
         return newUser;
       } catch (e) {
         console.log(e);
@@ -56,7 +57,46 @@ module.exports = {
         console.log(e);
       }
     },
+
+    async addInfoToUser(_, { userId, location, vibe, emojis }) {
+      try {
+        const targetUser = mongoose.Types.ObjectId(userId);
+        const updatedUser = await User.findByIdAndUpdate(
+          targetUser,
+          {
+            location,
+            vibe,
+            emojis,
+          },
+          { new: true },
+        ).populate('friends');
+        console.log(updatedUser);
+        return updatedUser;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    async addProfilePicToUser(_, { userId, profile_pic }) {
+      console.log(userId, profile_pic);
+      try {
+        const targetUser = mongoose.Types.ObjectId(userId);
+        const updatedUser = await User.findByIdAndUpdate(
+          targetUser,
+          {
+            profile_pic,
+          },
+          { new: true },
+        );
+        console.log('this is udpoated', updatedUser);
+        return updatedUser;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
     async addFriendToUser(_, { userId, friendId }) {
+      console.log(userId, friendId);
       try {
         const targetUser = mongoose.Types.ObjectId(userId);
         const friend = mongoose.Types.ObjectId(friendId);
@@ -76,6 +116,7 @@ module.exports = {
           { $push: { friends: targetUser } },
           { new: true },
         ).populate('friends');
+        console.log([updatedUser, updatedFriend]);
         return [updatedUser, updatedFriend];
       } catch (e) {
         console.log(e);

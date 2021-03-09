@@ -6,7 +6,7 @@ module.exports = {
     async getBuckets(_, { userId }) {
       const targetUser = mongoose.Types.ObjectId(userId);
       try {
-        const allBuckets = await Bucket.find({ author: targetUser });
+        const allBuckets = await Bucket.find({ members: targetUser });
         return allBuckets;
       } catch (error) {
         console.log(error);

@@ -11,6 +11,10 @@ const userSchema = new Schema(
     password: String,
     birthday: String,
     friends: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],
+    location: String,
+    vibe: String,
+    emojis: String,
+    profile_pic: String,
   },
   { timestamps: true },
 );
