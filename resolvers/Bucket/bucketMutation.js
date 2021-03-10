@@ -35,8 +35,6 @@ module.exports = {
 
     async addUserToBucket(_, { bucketId, userId }) {
       try {
-        console.log('THIS IS ADD USER TO BUCKET ');
-        console.log(bucketId, userId);
         const targetBucket = mongoose.Types.ObjectId(bucketId);
         const user = mongoose.Types.ObjectId(userId);
         const selectedBucket = await Bucket.findById(targetBucket);
@@ -222,7 +220,6 @@ module.exports = {
           },
           { new: true },
         );
-        console.log('Category removed!', catId);
         return updatedBucket;
       } catch (e) {
         console.log(e);
@@ -252,11 +249,3 @@ module.exports = {
     },
   },
 };
-
-// const res = await Bucket.findOneAndUpdate(
-//   {
-//     _id: targetBucket,
-//   },
-//   { $push: {'categories.$[outer].places': newPlace}},
-//   { "arrayFilters": [{"outer._id": targetCat}]}
-// );

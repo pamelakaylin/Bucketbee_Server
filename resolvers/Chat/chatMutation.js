@@ -22,15 +22,12 @@ module.exports = {
         const fullChat = await Chat.findById({ _id: newChat.id }).populate(
           'members',
         );
-        console.log(fullChat);
         return fullChat;
       } catch (e) {
         console.log(e);
       }
     },
     async postMessageToChat(_, { chatId, input }, context) {
-      console.log(chatId, input);
-      console.log('PMTC');
       try {
         const { description, author, content, timeslots, photo } = input;
         const authorId = mongoose.Types.ObjectId(author);

@@ -17,7 +17,6 @@ module.exports = {
           birthday,
         } = input;
         const existingUser = await User.find({ email });
-        console.log(existingUser);
         if (existingUser.length) throw new Error('Email already exists');
         const existingUsername = await User.find({ username });
         if (existingUsername.length) throw new Error('Username taken');
@@ -44,7 +43,6 @@ module.exports = {
           const hash = existingUser[0].password;
           const result = await bcrypt.compare(password, hash);
           if (result) {
-            console.log(existingUser[0]);
             return existingUser[0];
             // eslint-disable-next-line no-else-return
           } else {
@@ -70,7 +68,6 @@ module.exports = {
           },
           { new: true },
         ).populate('friends');
-        console.log(updatedUser);
         return updatedUser;
       } catch (e) {
         console.log(e);
@@ -78,7 +75,6 @@ module.exports = {
     },
 
     async addProfilePicToUser(_, { userId, profile_pic }) {
-      console.log(userId, profile_pic);
       try {
         const targetUser = mongoose.Types.ObjectId(userId);
         const updatedUser = await User.findByIdAndUpdate(
@@ -88,7 +84,6 @@ module.exports = {
           },
           { new: true },
         );
-        console.log('this is udpoated', updatedUser);
         return updatedUser;
       } catch (e) {
         console.log(e);
@@ -96,7 +91,6 @@ module.exports = {
     },
 
     async addFriendToUser(_, { userId, friendId }) {
-      console.log(userId, friendId);
       try {
         const targetUser = mongoose.Types.ObjectId(userId);
         const friend = mongoose.Types.ObjectId(friendId);
@@ -116,7 +110,6 @@ module.exports = {
           { $push: { friends: targetUser } },
           { new: true },
         ).populate('friends');
-        console.log([updatedUser, updatedFriend]);
         return [updatedUser, updatedFriend];
       } catch (e) {
         console.log(e);

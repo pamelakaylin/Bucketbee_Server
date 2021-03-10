@@ -5,9 +5,7 @@ module.exports = {
   Query: {
     async getUserByUsername(_, { username }) {
       try {
-        console.log('this is username', username);
         const user = await User.find({ username });
-        console.log(user);
         return user[0];
       } catch (e) {
         console.log(e);

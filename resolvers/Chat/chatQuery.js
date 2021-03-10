@@ -24,9 +24,4 @@ module.exports = {
       }
     },
   },
-  // Chat: {
-  //   messages(chat) {
-  //     return chat.messages;
-  //   },
-  // },
 };
