@@ -15,7 +15,7 @@ Bucketbee is a mobile app designed to help frequent travellers and global citize
 
 # Getting started
 
-### The client and server for this project has been split up into two separate repos; both need to be up and running for the app to be functional. Find the server [here](https://github.com/pamelakaylin/Bucketbee_Server).
+### The client and server for this project has been split up into two separate repos; both need to be up and running for the app to be functional. Find the client [here](https://github.com/pamelakaylin/Bucketbee_Client).
 
 1. Clone this repo
 
@@ -38,9 +38,9 @@ npm install
 expo start
 ```
 
-5. Set up the server if you haven't already done so
+5. Set up the client if you haven't already done so
 
-- You can find instructions in the server README [here](https://github.com/pamelakaylin/Bucketbee_Server).
+- You can find instructions in the client README [here](https://github.com/pamelakaylin/Bucketbee_Client).
 
 
 # App demo video
