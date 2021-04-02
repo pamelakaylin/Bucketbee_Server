@@ -52,7 +52,8 @@ nodemon
 
 # App demo video
 
-Here is the original app demo video on Youtube:
+Here is the original app demo video on Youtube!
+
 [![Screenshot 2021-04-02 at 18 10 28](https://user-images.githubusercontent.com/59074533/113443028-0ece5b80-93e9-11eb-952c-0cd890382c66.png)](https://www.youtube.com/watch?v=pKOvp1QCg0g)
 
 # Tech Stack
