@@ -17,17 +17,17 @@ Bucketbee is a mobile app designed to help frequent travellers and global citize
 
 ### The client and server for this project has been split up into two separate repos; both need to be up and running for the app to be functional. Find the client [here](https://github.com/pamelakaylin/Bucketbee_Client).
 
-1. Clone this repo
+#### 1. Clone this repo
 
 ```
 git clone https://github.com/pamelakaylin/Bucketbee_Server.git
 ```
-2. Navigate into the root folder and install the dependencies
+#### 2. Navigate into the root folder and install the dependencies
 
 ```
 npm install
 ```
-3. Database
+#### 3. Database
 
 - Make sure you have MongoDB installed and running! Run the following command with Homebrew to check 
 ```
@@ -36,7 +36,7 @@ brew services list
 
 - Create an .env file and add DB_NAME=[your_db_name_here]
 
-4. Start the server!
+#### 4. Start the server!
 ```
 node index.js
 ```
@@ -45,7 +45,7 @@ or if you have Nodemon installed
 nodemon
 ```
 
-5. Set up the client if you haven't already done so
+#### 5. Set up the client if you haven't already done so
 
 - You can find instructions in the client README [here](https://github.com/pamelakaylin/Bucketbee_Client).
 
